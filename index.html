@@ -385,40 +385,76 @@ function increment(id) {
 // --- Quiz ---
 const QUIZZES = [
   {
-    q: "中谷さんの職場は次のうちどれ？",
-    opts: ["全日本交通警備株式会社", "全日保証協会", "おばあちゃん専門保証協会", "全国警備員連合"],
+    q: "中谷さんの職場はどこ？",
+    opts: ["おばあちゃん専門サポートセンター", "全日保証協会", "警察官養成学校（父の縁故）", "熟女専門不動産屋"],
     ans: 1,
-    comment: "正解！全日保証協会の役員です。おばあちゃん専門じゃないよ（たぶん）。",
+    comment: "正解！全日保証協会の役員。おばあちゃん専門じゃないよ…たぶん。",
   },
   {
-    q: "中谷さんの性格を一言で表すと？",
-    opts: ["クール系ビジネスマン", "天然ドMいじられ上等キャラ", "寡黙なリーダー", "おばあちゃんハンター"],
+    q: "中谷さんの性格を正確に表しているのはどれ？",
+    opts: ["クールな切れ者", "天然ドMいじられ大魔王", "物静かなインドア派", "みんなに嫌われているが気づいていない"],
     ans: 1,
-    comment: "正解！天然＋ドM＋いじられ好き＝唯一無二のキャラクター。",
+    comment: "正解！天然×ドM×いじられ好き。三拍子そろった逸材。",
   },
   {
     q: "中谷さんのお父さんの職業は？",
-    opts: ["消防士", "税理士", "警察官", "おばあちゃんのボディーガード"],
+    opts: ["熟女カフェ経営者", "消防士", "警察官", "おばあちゃんのボディガード（非公式）"],
     ans: 2,
-    comment: "正解！警察官の息子。でも息子は保証協会でいじられてます。",
+    comment: "正解！警察官の息子。なのに息子は保証協会でいじられている。",
   },
   {
-    q: "中谷さんが街で70代のおばあちゃんを見たとき、最初にする行動は？",
-    opts: ["気づかないふりをする", "声をかけてしまう", "そっと写真を撮る", "お父さんに報告する"],
-    ans: 1,
-    comment: "正解！気づいたら話しかけてる。止められないのがドMの本能。",
+    q: "中谷さんが合コンに行ったとき、最初に話しかけるのは？",
+    opts: ["一番若い女性", "一番面白そうな人", "幹事のおばさんスタッフ", "お手洗いの案内をしてくれたベテランスタッフ"],
+    ans: 2,
+    comment: "正解！若い子より落ち着いた大人の女性に引き寄せられる体質。",
   },
   {
     q: "中谷さんがいじられたとき、最も多い反応は？",
-    opts: ["怒る", "泣く", "嬉しそうにする", "おばあちゃんに相談しに行く"],
-    ans: 2,
-    comment: "正解！いじられて喜ぶ。これがドMの真骨頂。",
+    opts: ["ガチ泣きする", "「もっとやって」という顔をする", "お父さんに通報する", "おばあちゃんに愚痴を言いに行く"],
+    ans: 1,
+    comment: "正解！「もっとやって」オーラが出てる。これぞドMの真骨頂。",
   },
   {
     q: "中谷さんの理想のデートプランは？",
-    opts: ["渋谷でショッピング", "地元の温泉でまったり（同伴者：熟女）", "映画鑑賞", "警察署の見学（お父さんのツテで）"],
+    opts: ["USJでテーマパーク", "地元の温泉でゆったり（相手は熟女）", "TikTokで流行りのカフェ", "警察署見学ツアー（父コネ）"],
     ans: 1,
-    comment: "正解！温泉＋熟女という渋すぎる組み合わせ。趣味が渋い。",
+    comment: "正解！渋い。渋すぎる。でも本人はこれが最高だと思っている。",
+  },
+  {
+    q: "中谷さんが「ドMです」と言うとき、周りの反応は？",
+    opts: ["「知ってた」と全員が同時に言う", "「え！意外！」と驚く", "「それ違法では？」とお父さんが心配する", "その場が静まりかえる"],
+    ans: 0,
+    comment: "正解！全員が「知ってた」と即答。むしろ今さら感がすごい。",
+  },
+  {
+    q: "中谷さんが「今日何か面白いことあった？」と聞かれたとき、話し始めるのは？",
+    opts: ["仕事の武勇伝", "スーパーで出会ったおばあちゃんの話", "お父さんの逮捕劇（みた）", "昨日見た夢の話"],
+    ans: 1,
+    comment: "正解！おばあちゃんの話が止まらない。気づいたら30分経ってる。",
+  },
+  {
+    q: "中谷さんが保証協会の役員として一番得意なことは？",
+    opts: ["数字の分析", "熟女テナントへの対応", "書類の紛失", "いじられながら場を和ませること"],
+    ans: 3,
+    comment: "正解！場を和ませる能力が突出している。それで役員になれた説あり。",
+  },
+  {
+    q: "中谷さんをいじると最終的にどうなる？",
+    opts: ["泣いて帰る", "嬉しそうにしてその場のMVPになる", "お父さんを呼ぶ", "全員逮捕される"],
+    ans: 1,
+    comment: "正解！いじられると輝く特殊体質。やればやるほど喜ぶ。",
+  },
+  {
+    q: "中谷さんが老後に叶えたい夢は？",
+    opts: ["世界一周旅行", "熟女に囲まれた老人ホーム暮らし", "警察官への転職", "保証協会の会長就任"],
+    ans: 1,
+    comment: "正解！むしろその老人ホームに自分も入りたがってる説がある。",
+  },
+  {
+    q: "中谷さんを一番うまくいじれるのは誰？",
+    opts: ["職場の後輩", "街のおばあちゃん", "お父さん（警察官）", "全日保証協会の加盟店"],
+    ans: 1,
+    comment: "正解！おばあちゃんのひとことで中谷さんは完全に操られる。",
   },
 ];
 
@@ -460,38 +496,29 @@ function nextQuiz() {
   loadQuiz();
 }
 
-// --- 登録カウンター ---
-const API_NS = 'kozarie-nakatani-ijiri';
-const API_KEY = 'members';
-const API_BASE = `https://api.counterapi.dev/v1/${API_NS}/${API_KEY}`;
+// --- 登録カウンター (localStorage版) ---
+// 端末ごとに登録状態を管理。同一端末からの重複登録を防止。
+const BASE_COUNT = 7; // 初期メンバー数（笑いのため少し盛ってある）
 
-async function fetchCount() {
-  try {
-    const r = await fetch(API_BASE);
-    const d = await r.json();
-    document.getElementById('memberCount').textContent = d.count ?? '?';
-  } catch {
-    document.getElementById('memberCount').textContent = '?';
-  }
+function getCount() {
+  return parseInt(localStorage.getItem('nakatani_total') || BASE_COUNT);
 }
 
-async function register() {
+function fetchCount() {
+  document.getElementById('memberCount').textContent = getCount();
+}
+
+function register() {
   if (localStorage.getItem('nakatani_registered')) return;
   const btn = document.getElementById('registerBtn');
+  const newCount = getCount() + 1;
+  localStorage.setItem('nakatani_registered', '1');
+  localStorage.setItem('nakatani_total', newCount);
+  document.getElementById('memberCount').textContent = newCount;
   btn.disabled = true;
-  btn.textContent = '登録中…';
-  try {
-    const r = await fetch(API_BASE + '/up');
-    const d = await r.json();
-    document.getElementById('memberCount').textContent = d.count ?? '?';
-    localStorage.setItem('nakatani_registered', '1');
-    btn.textContent = '✅ 登録済み！中谷いじり同盟へようこそ';
-    document.getElementById('registerMsg').textContent = '「いつでもいじっていいよ」という中谷さんの許可はたぶん出てる。';
-  } catch {
-    btn.disabled = false;
-    btn.textContent = '🎉 中谷いじり同盟に登録する';
-    document.getElementById('registerMsg').textContent = '通信エラー。もう一度試してね。';
-  }
+  btn.textContent = '✅ 登録済み！中谷いじり同盟へようこそ';
+  document.getElementById('registerMsg').textContent =
+    `あなたは ${newCount} 人目の仲間です。中谷さんをよろしくお願いします。`;
 }
 
 (function initRegister() {
@@ -500,7 +527,9 @@ async function register() {
     const btn = document.getElementById('registerBtn');
     btn.disabled = true;
     btn.textContent = '✅ 登録済み！中谷いじり同盟へようこそ';
-    document.getElementById('registerMsg').textContent = '「いつでもいじっていいよ」という中谷さんの許可はたぶん出てる。';
+    const saved = getCount();
+    document.getElementById('registerMsg').textContent =
+      `あなたは ${saved} 人目の仲間です。中谷さんをよろしくお願いします。`;
   }
 })();
 
