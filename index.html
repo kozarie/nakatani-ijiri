@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚔 中谷天然＆ドM研究所 🚔</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+  }
+  .container { max-width: 600px; margin: 0 auto; }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0 6px;
+    text-shadow: 0 0 20px #f0a500;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 30px;
+  }
+
+  /* --- Profile Card --- */
+  .profile-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f0a500, #e94560);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.4rem;
+    flex-shrink: 0;
+  }
+  .profile-info h2 { font-size: 1.3rem; margin-bottom: 4px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag {
+    background: rgba(240,165,0,0.2);
+    border: 1px solid rgba(240,165,0,0.4);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    color: #f0d080;
+  }
+
+  /* --- Big Button --- */
+  .btn-main {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #e94560, #c0392b);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(233,69,96,0.4);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(233,69,96,0.5); }
+  .btn-main:active { transform: translateY(1px); }
+
+  /* --- Roast Output --- */
+  .roast-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+    min-height: 90px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+    color: #f0e0a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+  }
+  .roast-box.empty { color: #666; font-size: 0.95rem; }
+
+  /* --- Tenten Meter --- */
+  .meter-section {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .meter-section h3 { font-size: 1rem; margin-bottom: 14px; color: #ccc; }
+  .meter-bar-wrap {
+    background: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    height: 28px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .meter-bar {
+    height: 100%;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #f0a500, #e94560);
+    width: 0%;
+    transition: width 0.8s cubic-bezier(.23,1,.32,1);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+  .meter-label {
+    text-align: center;
+    font-size: 1rem;
+    color: #f0d080;
+    margin-top: 6px;
+    min-height: 24px;
+  }
+
+  /* --- Quiz Section --- */
+  .quiz-section {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .quiz-section h3 { font-size: 1rem; margin-bottom: 16px; color: #ccc; }
+  .quiz-q { font-size: 1rem; margin-bottom: 12px; line-height: 1.5; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.15s, border 0.15s;
+    text-align: left;
+    color: white;
+  }
+  .quiz-opt:hover { background: rgba(240,165,0,0.15); border-color: rgba(240,165,0,0.4); }
+  .quiz-opt.correct { background: rgba(46,213,115,0.2); border-color: #2ed573; }
+  .quiz-opt.wrong { background: rgba(233,69,96,0.2); border-color: #e94560; }
+  .quiz-result { font-size: 0.9rem; margin-top: 12px; color: #f0d080; min-height: 20px; }
+  .btn-next {
+    margin-top: 14px;
+    padding: 10px 24px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-next:hover { background: rgba(255,255,255,0.18); }
+
+  /* --- Counter --- */
+  .counter-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .counter-card {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+  }
+  .counter-card .num {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f0d080;
+    display: block;
+  }
+  .counter-card .desc { font-size: 0.8rem; color: #aaa; margin-top: 4px; }
+  .counter-card button {
+    margin-top: 10px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .counter-card button:hover { background: rgba(255,255,255,0.15); }
+
+  /* --- Register Section --- */
+  .register-section {
+    background: linear-gradient(135deg, rgba(233,69,96,0.15), rgba(240,165,0,0.1));
+    border: 1px solid rgba(233,69,96,0.3);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .register-count {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    color: #f0d080;
+  }
+  #memberCount { font-size: 1.4rem; font-weight: bold; color: #e94560; }
+  .btn-register {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f0a500, #e94560);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+    box-shadow: 0 4px 20px rgba(240,165,0,0.3);
+  }
+  .btn-register:hover { transform: translateY(-2px); }
+  .btn-register:disabled { opacity: 0.5; cursor: default; transform: none; }
+  .register-msg { margin-top: 10px; font-size: 0.9rem; color: #aaa; min-height: 20px; }
+
+  footer { text-align: center; font-size: 0.75rem; color: #555; margin-top: 10px; padding-bottom: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🔥 中谷天然＆ドM研究所 🔥</h1>
+  <p class="subtitle">全日保証協会の天然役員・中谷さんをいつでもいじれるアプリ</p>
+
+  <!-- Profile -->
+  <div class="profile-card">
+    <div class="avatar">👮</div>
+    <div class="profile-info">
+      <h2>中谷 ○○ 係長</h2>
+      <p style="font-size:0.85rem;color:#aaa;">天然度：計測不能 / いじられ耐性：MAX</p>
+      <div class="tags">
+        <span class="tag">🏠 全日保証協会役員</span>
+        <span class="tag">👮 警察官の息子</span>
+        <span class="tag">🌿 超ド天然</span>
+        <span class="tag">😂 いじられ大好き</span>
+        <span class="tag">😈 ドM</span>
+        <span class="tag">👵 熟女・おばあちゃん好き</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Big Roast Button -->
+  <button class="btn-main" onclick="generateRoast()">
+    🎯 今日のいじり を生成する
+  </button>
+  <div class="roast-box empty" id="roastBox">
+    ボタンを押して中谷さんをいじろう！
+  </div>
+
+  <!-- Tenten Meter -->
+  <div class="meter-section">
+    <h3>🌀 本日の天然度メーター</h3>
+    <div class="meter-bar-wrap">
+      <div class="meter-bar" id="meterBar">0%</div>
+    </div>
+    <div class="meter-label" id="meterLabel">← いじりボタンを押すと計測します</div>
+  </div>
+
+  <!-- Incident Counters -->
+  <div class="counter-row">
+    <div class="counter-card">
+      <span class="num" id="tenten-count">0</span>
+      <div class="desc">本日の天然エピソード数</div>
+      <button onclick="increment('tenten-count')">＋ 追加</button>
+    </div>
+    <div class="counter-card">
+      <span class="num" id="ijiri-count">0</span>
+      <div class="desc">本日のいじり成功回数</div>
+      <button onclick="increment('ijiri-count')">＋ 追加</button>
+    </div>
+  </div>
+
+  <!-- Quiz -->
+  <div class="quiz-section">
+    <h3>📝 中谷さん天然クイズ</h3>
+    <div class="quiz-q" id="quizQ">問題を読み込み中...</div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div class="quiz-result" id="quizResult"></div>
+    <button class="btn-next" onclick="nextQuiz()" id="nextBtn" style="display:none">次の問題 →</button>
+  </div>
+
+  <!-- 登録セクション -->
+  <div class="register-section" id="registerSection">
+    <div class="register-count">
+      👥 現在の登録者数：<span id="memberCount">…</span> 人
+    </div>
+    <button class="btn-register" id="registerBtn" onclick="register()">
+      🎉 中谷いじり同盟に登録する
+    </button>
+    <div class="register-msg" id="registerMsg"></div>
+  </div>
+
+  <footer>中谷さんへの愛を込めて製作 ❤️ 本人公認いじりアプリ</footer>
+</div>
+
+<script>
+const ROASTS = [
+  "「保証協会って何を保証してるんですか？」と部下に真顔で聞いた、それが中谷役員です。",
+  "お父さんが警察官なのに、信号の色の意味を3秒考えることがある。",
+  "「いじられる」のが好きすぎて、会議でわざと天然発言してないか疑惑浮上中。",
+  "ドMを自称するが、おばあちゃんの前では「はい！」「わかりました！」と即座に従う謎の逆転現象。",
+  "天然すぎて、周りの人が「この人本当に役員なの？」と思うが、仕事は意外とできる謎の人物。",
+  "「警察官の息子」という肩書きがあるのに、職質されたことがある（自業自得）。",
+  "スーパーでおばあちゃんに話しかけられると、自分から荷物を持って家まで送ってしまうドM。",
+  "みんなには「俺ドMだから」と言い張るのに、熟女に優しくされると途端にデレる謎の生き物。",
+  "「天然」って言われるたびにちょっと嬉しそうにするの、もうわかってるよ！",
+  "お父さんが警察官→本人が全日役員。次の世代は何になるのか、周囲が固唾を呑んで見守り中。",
+  "会議中に発言した内容が、後で調べたら合ってた。それが一番みんなを驚かせた。",
+  "「いじってもいい人」の称号を自ら獲得し、業界内で確固たる地位を築いた希有な存在。",
+  "街で70代のおばあちゃんとすれ違うとき、一瞬目が輝く。それが中谷さんの素顔。",
+  "ドMなのに天然なので、いじめようとしてもいじられる側になってしまう自滅型ドM。",
+  "全日保証協会の忘年会で「俺はドMだ」と宣言した翌日、参加者全員がどS発言を覚えていなかった。",
+  "熟女が好きすぎて、街で推定65歳以上の女性を見るとレーダーが反応する特殊体質の疑惑あり。",
+  "「中谷さんがいるとその場が明るくなる」という褒め言葉が、いじりなのか本気なのかわからない。",
+  "ドMとおばあちゃん好きを同時に成立させている唯一の生命体として学会に報告されるべき存在。",
+];
+
+const METER_LABELS = [
+  { max: 20, label: "ほぼ普通の人（珍しい日）" },
+  { max: 40, label: "じわじわ天然モードに突入中" },
+  { max: 60, label: "いつもの中谷さん" },
+  { max: 80, label: "今日は天然エンジン全開！" },
+  { max: 100, label: "⚠️ 天然度が臨界点突破しました" },
+];
+
+let lastRoastIdx = -1;
+
+function generateRoast() {
+  let idx;
+  do { idx = Math.floor(Math.random() * ROASTS.length); } while (idx === lastRoastIdx);
+  lastRoastIdx = idx;
+
+  const box = document.getElementById('roastBox');
+  box.style.opacity = 0;
+  setTimeout(() => {
+    box.textContent = ROASTS[idx];
+    box.classList.remove('empty');
+    box.style.opacity = 1;
+  }, 200);
+
+  const pct = Math.floor(Math.random() * 60) + 40;
+  const bar = document.getElementById('meterBar');
+  bar.style.width = pct + '%';
+  bar.textContent = pct + '%';
+  const label = METER_LABELS.find(l => pct <= l.max);
+  document.getElementById('meterLabel').textContent = label ? label.label : '';
+
+  document.getElementById('ijiri-count').textContent =
+    parseInt(document.getElementById('ijiri-count').textContent) + 1;
+}
+
+function increment(id) {
+  const el = document.getElementById(id);
+  el.textContent = parseInt(el.textContent) + 1;
+}
+
+// --- Quiz ---
+const QUIZZES = [
+  {
+    q: "中谷さんの職場は次のうちどれ？",
+    opts: ["全日本交通警備株式会社", "全日保証協会", "おばあちゃん専門保証協会", "全国警備員連合"],
+    ans: 1,
+    comment: "正解！全日保証協会の役員です。おばあちゃん専門じゃないよ（たぶん）。",
+  },
+  {
+    q: "中谷さんの性格を一言で表すと？",
+    opts: ["クール系ビジネスマン", "天然ドMいじられ上等キャラ", "寡黙なリーダー", "おばあちゃんハンター"],
+    ans: 1,
+    comment: "正解！天然＋ドM＋いじられ好き＝唯一無二のキャラクター。",
+  },
+  {
+    q: "中谷さんのお父さんの職業は？",
+    opts: ["消防士", "税理士", "警察官", "おばあちゃんのボディーガード"],
+    ans: 2,
+    comment: "正解！警察官の息子。でも息子は保証協会でいじられてます。",
+  },
+  {
+    q: "中谷さんが街で70代のおばあちゃんを見たとき、最初にする行動は？",
+    opts: ["気づかないふりをする", "声をかけてしまう", "そっと写真を撮る", "お父さんに報告する"],
+    ans: 1,
+    comment: "正解！気づいたら話しかけてる。止められないのがドMの本能。",
+  },
+  {
+    q: "中谷さんがいじられたとき、最も多い反応は？",
+    opts: ["怒る", "泣く", "嬉しそうにする", "おばあちゃんに相談しに行く"],
+    ans: 2,
+    comment: "正解！いじられて喜ぶ。これがドMの真骨頂。",
+  },
+  {
+    q: "中谷さんの理想のデートプランは？",
+    opts: ["渋谷でショッピング", "地元の温泉でまったり（同伴者：熟女）", "映画鑑賞", "警察署の見学（お父さんのツテで）"],
+    ans: 1,
+    comment: "正解！温泉＋熟女という渋すぎる組み合わせ。趣味が渋い。",
+  },
+];
+
+let currentQuiz = 0;
+let answered = false;
+
+function loadQuiz() {
+  const q = QUIZZES[currentQuiz % QUIZZES.length];
+  document.getElementById('quizQ').textContent = `Q${currentQuiz + 1}. ${q.q}`;
+  document.getElementById('quizResult').textContent = '';
+  document.getElementById('nextBtn').style.display = 'none';
+  answered = false;
+
+  const optsDiv = document.getElementById('quizOpts');
+  optsDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(i);
+    optsDiv.appendChild(btn);
+  });
+}
+
+function answerQuiz(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUIZZES[currentQuiz % QUIZZES.length];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts[q.ans].classList.add('correct');
+  if (i !== q.ans) opts[i].classList.add('wrong');
+  document.getElementById('quizResult').textContent =
+    i === q.ans ? `✅ ${q.comment}` : `❌ 不正解！${q.comment}`;
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+
+function nextQuiz() {
+  currentQuiz++;
+  loadQuiz();
+}
+
+// --- 登録カウンター ---
+const API_NS = 'kozarie-nakatani-ijiri';
+const API_KEY = 'members';
+const API_BASE = `https://api.counterapi.dev/v1/${API_NS}/${API_KEY}`;
+
+async function fetchCount() {
+  try {
+    const r = await fetch(API_BASE);
+    const d = await r.json();
+    document.getElementById('memberCount').textContent = d.count ?? '?';
+  } catch {
+    document.getElementById('memberCount').textContent = '?';
+  }
+}
+
+async function register() {
+  if (localStorage.getItem('nakatani_registered')) return;
+  const btn = document.getElementById('registerBtn');
+  btn.disabled = true;
+  btn.textContent = '登録中…';
+  try {
+    const r = await fetch(API_BASE + '/up');
+    const d = await r.json();
+    document.getElementById('memberCount').textContent = d.count ?? '?';
+    localStorage.setItem('nakatani_registered', '1');
+    btn.textContent = '✅ 登録済み！中谷いじり同盟へようこそ';
+    document.getElementById('registerMsg').textContent = '「いつでもいじっていいよ」という中谷さんの許可はたぶん出てる。';
+  } catch {
+    btn.disabled = false;
+    btn.textContent = '🎉 中谷いじり同盟に登録する';
+    document.getElementById('registerMsg').textContent = '通信エラー。もう一度試してね。';
+  }
+}
+
+(function initRegister() {
+  fetchCount();
+  if (localStorage.getItem('nakatani_registered')) {
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.textContent = '✅ 登録済み！中谷いじり同盟へようこそ';
+    document.getElementById('registerMsg').textContent = '「いつでもいじっていいよ」という中谷さんの許可はたぶん出てる。';
+  }
+})();
+
+loadQuiz();
+</script>
+</body>
+</html>
